@@ -33,6 +33,18 @@ class ScreenElements(pygame.sprite.Sprite):
     def collision(self, group, name):
         collide = pygame.sprite.spritecollide(self.sprite, group, True)  
 
+class PipeElements(ScreenElements):
+    def __init__(self, image, axis_x, axis_y, *groups):
+        super().__init__(image, axis_x, axis_y, *groups)
+
+    def update(self, *args):
+        self.move()
+
+    def move(self):
+        self.rect[0] -= 3
+
+        if self.rect[0] <= -100:
+            self.kill()
 
 class TextElements:
     text_screen: str
