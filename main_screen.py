@@ -10,6 +10,8 @@ class MainScreen:
         self.title = pygame.display.set_caption(title)
         self.loop = True
         self.fps = pygame.time.Clock()
+
+        self.game = GameScene()
        
     def events(self):
         for events in pygame.event.get():
@@ -18,7 +20,8 @@ class MainScreen:
 
 
     def draw(self):
-        pass
+        self.game.draw(self.window)
+        self.game.update()
 
 
     def update(self):

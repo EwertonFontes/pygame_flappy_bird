@@ -3,12 +3,8 @@ import pygame
 
 
 class ScreenElements(pygame.sprite.Sprite):
-    image: str
-    axis_x: int
-    axis_y: int
-
     def __init__(self, image, axis_x, axis_y, *groups):
-        super().__init__(image, axis_x, axis_y, *groups)
+        super().__init__(*groups)
         
         self.image = pygame.image.load(image)
         self.rect = self.image.get_rect()
