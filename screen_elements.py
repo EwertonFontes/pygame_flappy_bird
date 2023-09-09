@@ -2,28 +2,24 @@
 import pygame
 
 
-class ScreenElements:
+class ScreenElements(pygame.sprite.Sprite):
     image: str
     axis_x: int
     axis_y: int
 
-    def __init__(self, image, axis_x, axis_y):
+    def __init__(self, image, axis_x, axis_y, *groups):
+        super().__init__(image, axis_x, axis_y, *groups)
         
-        #Informação de um  grupo de elemento
-        self.group = pygame.sprite.Group()
-        #images, dimensões, tamanhos
-        self.sprite = pygame.sprite.Sprite(self.group) 
-
-        self.sprite.image = pygame.image.load(image)
-        self.sprite.rect = self.sprite.image.get_rect()
-        self.sprite.rect[0] = axis_x
-        self.sprite.rect[1] = axis_y
+        self.image = pygame.image.load(image)
+        self.rect = self.image.get_rect()
+        self.rect[0] = axis_x
+        self.rect[1] = axis_y
 
         self.frame = 1
         self.tick = 0
 
-    def drawing(self, window):
-        self.group.draw(window)
+    def draw(self, window):
+        pass
     
     def animation(self, image: str, tick: int, frames: int):
         self.tick += 1
@@ -34,7 +30,7 @@ class ScreenElements:
         if self.frame == frames:
             self.frame = 1
         
-        self.sprite.image = pygame.image.load(
+        self.image = pygame.image.load(
             f"assets/{image}{str(self.frame)}.png"
         )
     
@@ -42,7 +38,7 @@ class ScreenElements:
         collide = pygame.sprite.spritecollide(self.sprite, group, True)  
 
 
-class TextElement:
+class TextElements:
     text_screen: str
     size: int
 

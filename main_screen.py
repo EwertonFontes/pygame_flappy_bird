@@ -24,6 +24,6 @@ class MainScreen:
     def update(self):
        while self.loop:
             self.fps.tick(30)
-            self.draw()
             self.events()
+            self.draw()
             pygame.display.update()

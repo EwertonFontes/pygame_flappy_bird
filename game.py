@@ -1,6 +1,6 @@
 import pygame
 import random
-from screen_elements import ScreenElements, TextElement
+from screen_elements import ScreenElements, TextElements
 
 class GameScene: 
 
