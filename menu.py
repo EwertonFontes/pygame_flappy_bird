@@ -1,5 +1,5 @@
 import pygame
-from screen_elements import ScreenElements
+from screen_elements import ScreenElements, TextElements
 
 class MenuScene:
     def __init__(self):
@@ -15,13 +15,17 @@ class MenuScene:
 
         self.change_scene = False
 
+        self.max_score = TextElements("0", 100)
+
     def draw(self, window):
         self.all_sprites.draw(window)
+        self.max_score.draw(window, 160, 250)
     
-    def update(self):
+    def update(self, pts):
         self.all_sprites.update()
         self.move_bg()
         self.move_groud()
+        self.max_score.update_text(pts)
 
     def events(self, event):
         if event.type == pygame.MOUSEBUTTONUP:

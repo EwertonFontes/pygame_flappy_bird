@@ -25,6 +25,9 @@ class GameScene:
 
         self.ticks = 0
         self.change_scene = False
+        self.timer = 0
+        self.max_score = 0
+        self.check_score()
     
     def draw(self, window):
         self.all_sprites.draw(window) 
@@ -41,7 +44,8 @@ class GameScene:
             self.score.update_text(str(self.bird.pts))    
             self.all_sprites.update()
         else:
-            self.change_scene = True
+            self.save_max_score()
+            self.gameover()
             
     def move_bg(self):
         self.backgroud_image.rect[0] -= 1
@@ -72,4 +76,18 @@ class GameScene:
 
     
     def gameover(self):
-        pass
+        self.timer += 1 
+        if self.timer >= 30:
+            self.change_scene = True
+    
+    def save_max_score(self):
+        if self.bird.pts > self.max_score:
+            self.max_score = self.bird.pts
+            file = open("save.txt", "w")
+            file.write(str(self.max_score))
+            file.close()
+    
+    def check_score(self):
+        file = open("save.txt", "r")
+        self.max_score = int(file.read())
+        file.close()

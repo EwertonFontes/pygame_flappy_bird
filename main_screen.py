@@ -30,7 +30,7 @@ class MainScreen:
     def draw(self):
         if not self.menu.change_scene:
             self.menu.draw(self.window)
-            self.menu.update()
+            self.menu.update(str(self.game.max_score))
         elif not self.game.change_scene:
             self.game.draw(self.window)
             self.game.update()
