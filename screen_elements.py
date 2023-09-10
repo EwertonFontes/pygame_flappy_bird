@@ -49,6 +49,12 @@ class CoinElements(ScreenElements):
 class BirdElements(ScreenElements):
     def __init__(self, image, axis_x, axis_y, *groups):
         super().__init__(image, axis_x, axis_y, *groups)
+        
+        pygame.mixer.init()
+        self.sound_pts = pygame.mixer.Sound("assets/sounds/point.ogg")
+        self.sound_block = pygame.mixer.Sound("assets/sounds/hit.ogg")
+        self.sound_wing = pygame.mixer.Sound("assets/sounds/wing.ogg")
+
         self.ticks = 0
         self.speed = 4
         self.gravity = 1
@@ -71,6 +77,7 @@ class BirdElements(ScreenElements):
         if self.play:
             if key[pygame.K_SPACE]:
                 self.speed -=5
+                self.sound_wing.play()
         
         if self.rect[1] >= 440:
             self.rect[1] = 440
@@ -81,11 +88,13 @@ class BirdElements(ScreenElements):
     def collision_pipes(self, group):
         collide = pygame.sprite.spritecollide(self, group, False)
         if collide:
+            self.sound_block.play()
             self.play = False
 
     def collision_coins(self, group):
         collide = pygame.sprite.spritecollide(self, group, True)
         if collide:
+            self.sound_pts.play()
             self.pts += 1
 
 class TextElements:
