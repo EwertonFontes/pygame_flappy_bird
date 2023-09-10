@@ -20,6 +20,7 @@ class GameScene:
         self.ground = ScreenElements("assets/ground.png", 0, 480, self.all_sprites)
         self.ground_aux = ScreenElements("assets/ground.png", 360, 480, self.all_sprites)
         
+        self.score = TextElements("0", 100)
         self.bird = BirdElements("assets/bird0.png", 50, 320, self.all_sprites)
 
         self.ticks = 0
@@ -27,14 +28,17 @@ class GameScene:
     
     def draw(self, window):
         self.all_sprites.draw(window) 
+        self.score.draw(window, 150, 50)
 
     def update(self):
         self.move_bg()
         self.move_groud()
-        self.spaw_pipes()
-        self.bird.collision_coins(self.coins_group)
-        self.bird.collision_pipes(self.pipes_group)
         self.all_sprites.update()
+        if self.bird.play:
+            self.spaw_pipes()
+            self.bird.collision_coins(self.coins_group)
+            self.bird.collision_pipes(self.pipes_group)
+            self.score.update_text(str(self.bird.pts))    
         
     def move_bg(self):
         self.backgroud_image.rect[0] -= 1

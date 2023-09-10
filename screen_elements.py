@@ -53,6 +53,9 @@ class BirdElements(ScreenElements):
         self.speed = 4
         self.gravity = 1
 
+        self.play = True
+        self.pts = 0
+
     def update(self, *args):
         self.animation(image="bird", amount_images=4)
         self.move_bird()
@@ -65,9 +68,9 @@ class BirdElements(ScreenElements):
         if self.speed >= 15:
             self.speed = 15
        
-
-        if key[pygame.K_SPACE]:
-            self.speed -=5
+        if self.play:
+            if key[pygame.K_SPACE]:
+                self.speed -=5
         
         if self.rect[1] >= 440:
             self.rect[1] = 440
@@ -78,22 +81,22 @@ class BirdElements(ScreenElements):
     def collision_pipes(self, group):
         collide = pygame.sprite.spritecollide(self, group, False)
         if collide:
-            print("cano")
+            self.play = False
 
     def collision_coins(self, group):
         collide = pygame.sprite.spritecollide(self, group, True)
         if collide:
-            print("coins")
+            self.pts += 1
 
 class TextElements:
     text_screen: str
     size: int
 
     def __init__(self, text_screen, size):
-        self.font = pygame.font.SysFont("Arial bold", size)
+        self.font = pygame.font.Font("assets/font/font.ttf", size)
         self.render = self.font.render(text_screen, True, (255,255,255))
     
-    def drawing(self, window, axis_x, axis_y):
+    def draw(self, window, axis_x, axis_y):
         window.blit(self.render, (axis_x, axis_y))
     
     def update_text(self, text_screen):
