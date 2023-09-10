@@ -48,6 +48,36 @@ class CoinElements(ScreenElements):
         self.move()
         self.animation(image="", amount_images=6)
 
+class BirdElements(ScreenElements):
+    def __init__(self, image, axis_x, axis_y, *groups):
+        super().__init__(image, axis_x, axis_y, *groups)
+        self.ticks = 0
+        self.speed = 4
+        self.gravity = 1
+
+    def update(self, *args):
+        self.animation(image="bird", amount_images=4)
+        self.move_bird()
+
+    def move_bird(self):
+        key = pygame.key.get_pressed()
+        self.speed += self.gravity
+        self.rect[1] += self.speed
+
+        if self.speed >= 15:
+            self.vel = 15
+       
+
+        if key[pygame.K_SPACE]:
+            self.speed -=5
+        
+        if self.rect[1] >= 440:
+            self.rect[1] = 440
+        elif self.rect[1] <= 0:
+            self.rect[1] = 0
+            self.speed = 4
+        
+        
 class TextElements:
     text_screen: str
     size: int

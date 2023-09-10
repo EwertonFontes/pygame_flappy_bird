@@ -4,7 +4,8 @@ from screen_elements import (
     ScreenElements, 
     TextElements, 
     PipeElements,
-    CoinElements
+    CoinElements,
+    BirdElements
 )
 
 class GameScene: 
@@ -16,6 +17,8 @@ class GameScene:
         self.ground = ScreenElements("assets/ground.png", 0, 480, self.all_sprites)
         self.ground_aux = ScreenElements("assets/ground.png", 360, 480, self.all_sprites)
         
+        bird = BirdElements("assets/bird0.png", 50, 320, self.all_sprites)
+
         self.ticks = 0
         self.change_scene = False
     
@@ -56,5 +59,6 @@ class GameScene:
             pipe_up = PipeElements("assets/pipe2.png", 360, pipe_down.rect[1] - 550, self.all_sprites)
             coin = CoinElements("assets/0.png", 386, pipe_down.rect[1] - 120, self.all_sprites)
 
+    
     def gameover(self):
         pass
