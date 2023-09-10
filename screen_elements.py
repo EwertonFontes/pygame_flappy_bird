@@ -1,4 +1,5 @@
 
+from typing import Any
 import pygame
 
 
@@ -16,20 +17,17 @@ class ScreenElements(pygame.sprite.Sprite):
 
     def draw(self, window):
         pass
-    
-    def animation(self, image: str, tick: int, frames: int):
-        self.tick += 1
-        if self.tick == tick:
-            self.tick = 0 
-            self.frame += 1
-        
-        if self.frame == frames:
-            self.frame = 1
-        
-        self.image = pygame.image.load(
-            f"assets/{image}{str(self.frame)}.png"
-        )
-    
+
+    def move(self):
+        self.rect[0] -= 3
+
+        if self.rect[0] <= -100:
+            self.kill()
+
+    def animation(self, image: str, amount_images: int):
+        self.ticks = (self.ticks + 1) % amount_images # quantidade de imagem do obj
+        self.image = pygame.image.load(f"assets/{image}{str(self.ticks)}.png")   
+
     def collision(self, group, name):
         collide = pygame.sprite.spritecollide(self.sprite, group, True)  
 
@@ -40,11 +38,15 @@ class PipeElements(ScreenElements):
     def update(self, *args):
         self.move()
 
-    def move(self):
-        self.rect[0] -= 3
 
-        if self.rect[0] <= -100:
-            self.kill()
+class CoinElements(ScreenElements):
+    def __init__(self, image, axis_x, axis_y, *groups):
+        super().__init__(image, axis_x, axis_y, *groups)
+        self.ticks = 0
+    
+    def update(self, *args):
+        self.move()
+        self.animation(image="", amount_images=6)
 
 class TextElements:
     text_screen: str

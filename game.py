@@ -1,6 +1,11 @@
 import pygame
 import random
-from screen_elements import ScreenElements, TextElements, PipeElements
+from screen_elements import (
+    ScreenElements, 
+    TextElements, 
+    PipeElements,
+    CoinElements
+)
 
 class GameScene: 
 
@@ -45,11 +50,11 @@ class GameScene:
     def spaw_pipes(self):
         self.ticks += 1
 
-        if self.ticks >= 90:
+        if self.ticks >= random.randrange(60,110):
             self.ticks = 0
-            pipe_down = PipeElements("assets/pipe1.png", 360, 400, self.all_sprites)
-            pipe_up = PipeElements("assets/pipe2.png", 360, -150, self.all_sprites)
-
+            pipe_down = PipeElements("assets/pipe1.png", 360, random.randrange(300,450), self.all_sprites)
+            pipe_up = PipeElements("assets/pipe2.png", 360, pipe_down.rect[1] - 550, self.all_sprites)
+            coin = CoinElements("assets/0.png", 386, pipe_down.rect[1] - 120, self.all_sprites)
 
     def gameover(self):
         pass
