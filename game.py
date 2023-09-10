@@ -33,13 +33,16 @@ class GameScene:
     def update(self):
         self.move_bg()
         self.move_groud()
-        self.all_sprites.update()
+       
         if self.bird.play:
             self.spaw_pipes()
             self.bird.collision_coins(self.coins_group)
             self.bird.collision_pipes(self.pipes_group)
             self.score.update_text(str(self.bird.pts))    
-        
+            self.all_sprites.update()
+        else:
+            self.change_scene = True
+            
     def move_bg(self):
         self.backgroud_image.rect[0] -= 1
         self.backgroud_image_aux.rect[0] -= 1

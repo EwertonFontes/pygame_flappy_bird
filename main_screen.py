@@ -13,11 +13,15 @@ class MainScreen:
 
         self.game = GameScene()
         self.menu = MenuScene()
+
+        self.quit = False
        
     def events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.loop = False
+                self.quit = True
+                
             
             if not self.menu.change_scene:
                 self.menu.events(event)
@@ -30,10 +34,16 @@ class MainScreen:
         elif not self.game.change_scene:
             self.game.draw(self.window)
             self.game.update()
+        else:
+            self.loop = False
 
     def update(self):
-       while self.loop:
+        while self.loop:
             self.fps.tick(30)
             self.events()
             self.draw()
             pygame.display.update()
+        
+        pygame.quit()
+        return False if self.quit else True
+        

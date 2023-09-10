@@ -1,4 +1,6 @@
 from main_screen import MainScreen
 
-game = MainScreen(360, 640, "FlappyBird")
-game.update()
+running = True
+while running:
+    game = MainScreen(360, 640, "FlappyBird")
+    running = game.update()
