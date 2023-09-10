@@ -27,9 +27,7 @@ class ScreenElements(pygame.sprite.Sprite):
     def animation(self, image: str, amount_images: int):
         self.ticks = (self.ticks + 1) % amount_images # quantidade de imagem do obj
         self.image = pygame.image.load(f"assets/{image}{str(self.ticks)}.png")   
-
-    def collision(self, group, name):
-        collide = pygame.sprite.spritecollide(self.sprite, group, True)  
+ 
 
 class PipeElements(ScreenElements):
     def __init__(self, image, axis_x, axis_y, *groups):
@@ -65,7 +63,7 @@ class BirdElements(ScreenElements):
         self.rect[1] += self.speed
 
         if self.speed >= 15:
-            self.vel = 15
+            self.speed = 15
        
 
         if key[pygame.K_SPACE]:
@@ -76,8 +74,17 @@ class BirdElements(ScreenElements):
         elif self.rect[1] <= 0:
             self.rect[1] = 0
             self.speed = 4
-        
-        
+
+    def collision_pipes(self, group):
+        collide = pygame.sprite.spritecollide(self, group, False)
+        if collide:
+            print("cano")
+
+    def collision_coins(self, group):
+        collide = pygame.sprite.spritecollide(self, group, True)
+        if collide:
+            print("coins")
+
 class TextElements:
     text_screen: str
     size: int
